@@ -1,0 +1,253 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Linear Optimization Food App</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-utensils me-2"></i>Linear Optimization Food App
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-home me-1"></i>Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Recipes" asp-action="Index">
+                                <i class="fas fa-book me-1"></i>Recipes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Ingredients" asp-action="Index">
+                                <i class="fas fa-carrot me-1"></i>My Ingredients
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Optimizer" asp-action="Index">
+                                <i class="fas fa-magic me-1"></i>Optimize Meals
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-cog me-1"></i>Tools
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Recipes" asp-action="Index">
+                                        <i class="fas fa-list me-2"></i>View All Recipes
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Ingredients" asp-action="Index">
+                                        <i class="fas fa-edit me-2"></i>Manage Ingredients
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Optimizer" asp-action="Index">
+                                        <i class="fas fa-chart-line me-2"></i>Run Optimization
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Admin dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-cogs me-1"></i>Admin
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><h6 class="dropdown-header">Manage Content</h6></li>
+                                <li>
+                                    <a class="dropdown-item" href="/Admin/Ingredients">
+                                        <i class="fas fa-leaf me-2 text-success"></i>Manage Ingredients
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="/Admin/Recipes">
+                                        <i class="fas fa-utensils me-2 text-primary"></i>Manage Recipes
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><h6 class="dropdown-header">Quick Actions</h6></li>
+                                <li>
+                                    <a class="dropdown-item" href="/Admin/Ingredients/Create">
+                                        <i class="fas fa-plus me-2 text-success"></i>Add Ingredient
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="/Admin/Recipes/Create">
+                                        <i class="fas fa-plus me-2 text-primary"></i>Add Recipe
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            <!-- Success Messages -->
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>
+                    @TempData["Success"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <!-- Error Messages -->
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    @TempData["Error"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <!-- Warning Messages -->
+            @if (TempData["Warning"] != null)
+            {
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    @TempData["Warning"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <!-- Info Messages -->
+            @if (TempData["Info"] != null)
+            {
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    <i class="fas fa-info-circle me-2"></i>
+                    @TempData["Info"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted bg-light mt-5">
+        <div class="container">
+            <div class="row py-4">
+                <div class="col-md-6">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-utensils text-primary me-2"></i>
+                        <span>&copy; 2025 - Linear Optimization Food App</span>
+                    </div>
+                    <small class="text-muted">Built with ASP.NET Core & SQL Server</small>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-1">
+                        <i class="fas fa-leaf text-success me-1"></i>
+                        <strong>Optimize your meals, minimize waste!</strong>
+                    </p>
+                    <small class="text-muted">
+                        <i class="fas fa-users me-1"></i>Feed more people with smart planning
+                    </small>
+                </div>
+            </div>
+            <div class="row border-top pt-3">
+                <div class="col-12 text-center">
+                    <small class="text-muted">
+                        <a href="@Url.Action("Index", "Home")" class="text-decoration-none me-3">
+                            <i class="fas fa-home me-1"></i>Home
+                        </a>
+                        <a href="@Url.Action("Index", "Recipes")" class="text-decoration-none me-3">
+                            <i class="fas fa-book me-1"></i>Recipes
+                        </a>
+                        <a href="@Url.Action("Index", "Ingredients")" class="text-decoration-none me-3">
+                            <i class="fas fa-carrot me-1"></i>Ingredients
+                        </a>
+                        <a href="@Url.Action("Index", "Optimizer")" class="text-decoration-none">
+                            <i class="fas fa-magic me-1"></i>Optimizer
+                        </a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- THIS IS THE CRITICAL FIX - Render Scripts section -->
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <!-- Global JavaScript for enhanced UX -->
+    <script>
+        // Auto-hide alerts after 5 seconds
+        $(document).ready(function() {
+            setTimeout(function() {
+                $('.alert').fadeOut('slow');
+            }, 5000);
+
+            // Add loading spinner to buttons on form submit
+            $('form').on('submit', function() {
+                $(this).find('button[type="submit"]').each(function() {
+                    var $btn = $(this);
+                    var originalText = $btn.html();
+                    $btn.html('<i class="fas fa-spinner fa-spin me-2"></i>Processing...');
+                    $btn.prop('disabled', true);
+
+                    // Re-enable after 3 seconds as fallback
+                    setTimeout(function() {
+                        $btn.html(originalText);
+                        $btn.prop('disabled', false);
+                    }, 3000);
+                });
+            });
+
+            // Add smooth scrolling to page top
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 100) {
+                    $('#scrollToTop').fadeIn();
+                } else {
+                    $('#scrollToTop').fadeOut();
+                }
+            });
+
+            // Tooltip initialization for any elements with data-bs-toggle="tooltip"
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+    </script>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" class="btn btn-primary position-fixed bottom-0 end-0 m-3"
+            style="display: none; z-index: 1000;"
+            onclick="window.scrollTo({top: 0, behavior: 'smooth'});"
+            data-bs-toggle="tooltip"
+            data-bs-placement="left"
+            title="Back to Top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+</body>
+</html>

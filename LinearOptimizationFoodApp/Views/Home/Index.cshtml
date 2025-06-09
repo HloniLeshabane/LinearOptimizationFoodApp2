@@ -1,0 +1,382 @@
+﻿@model List<LinearOptimizationFoodApp.Models.Recipe>
+@{
+    ViewData["Title"] = "Welcome to Food Optimizer";
+}
+
+<!-- Hero Section -->
+<div class="hero-section bg-gradient p-5 rounded mb-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+    <div class="row align-items-center">
+        <div class="col-lg-8">
+            <h1 class="display-4 fw-bold mb-3">
+                <i class="fas fa-utensils me-3"></i>Food Optimizer
+            </h1>
+            <p class="lead mb-4">
+                Transform your available ingredients into delicious meals that feed the maximum number of people.
+                Our smart algorithm finds the perfect recipe combinations to minimize waste and maximize satisfaction!
+            </p>
+            <div class="d-flex gap-3 flex-wrap">
+                <a asp-controller="Ingredients" asp-action="Index" class="btn btn-light btn-lg">
+                    <i class="fas fa-carrot me-2"></i>Set My Ingredients
+                </a>
+                <a asp-controller="Optimizer" asp-action="Index" class="btn btn-outline-light btn-lg">
+                    <i class="fas fa-magic me-2"></i>Optimize Now
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-4 text-center">
+            <div class="hero-icon-container">
+                <i class="fas fa-chart-line display-1 opacity-75"></i>
+                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+                    <div class="text-center">
+                        <div class="fs-1 fw-bold">@Model.Count</div>
+                        <small>Recipes Available</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row mb-5">
+    <div class="col-md-3 mb-3">
+        <div class="card border-0 shadow-sm h-100 text-center bg-light">
+            <div class="card-body py-4">
+                <i class="fas fa-book fa-2x text-primary mb-3"></i>
+                <h4 class="fw-bold text-primary">@Model.Count</h4>
+                <p class="text-muted mb-0">Available Recipes</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-0 shadow-sm h-100 text-center bg-light">
+            <div class="card-body py-4">
+                <i class="fas fa-users fa-2x text-success mb-3"></i>
+                <h4 class="fw-bold text-success">@Model.Sum(r => r.Feeds)</h4>
+                <p class="text-muted mb-0">Total People Can Feed</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-0 shadow-sm h-100 text-center bg-light">
+            <div class="card-body py-4">
+                <i class="fas fa-leaf fa-2x text-warning mb-3"></i>
+                <h4 class="fw-bold text-warning">@Model.SelectMany(r => r.RecipeIngredients).Select(ri => ri.Ingredient.Name).Distinct().Count()</h4>
+                <p class="text-muted mb-0">Unique Ingredients</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-0 shadow-sm h-100 text-center bg-light">
+            <div class="card-body py-4">
+                <i class="fas fa-magic fa-2x text-info mb-3"></i>
+                <h4 class="fw-bold text-info">Smart</h4>
+                <p class="text-muted mb-0">AI Algorithm</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- How It Works Section -->
+<div class="row mb-5">
+    <div class="col-12">
+        <h2 class="text-center mb-5">
+            <i class="fas fa-cogs me-2 text-primary"></i>How It Works
+        </h2>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 border-0 shadow-sm text-center step-card">
+            <div class="card-body p-4">
+                <div class="step-number bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                    <span class="fw-bold fs-4">1</span>
+                </div>
+                <i class="fas fa-list-ul fa-3x text-primary mb-3 d-block"></i>
+                <h5 class="card-title">Browse Recipes</h5>
+                <p class="card-text">Explore our collection of delicious recipes and see what ingredients each one requires. From simple pancakes to elaborate meals!</p>
+                <a asp-controller="Recipes" asp-action="Index" class="btn btn-outline-primary">
+                    <i class="fas fa-eye me-2"></i>View Recipes
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 border-0 shadow-sm text-center step-card">
+            <div class="card-body p-4">
+                <div class="step-number bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                    <span class="fw-bold fs-4">2</span>
+                </div>
+                <i class="fas fa-shopping-basket fa-3x text-success mb-3 d-block"></i>
+                <h5 class="card-title">Set Your Ingredients</h5>
+                <p class="card-text">Tell us exactly what ingredients you have available in your kitchen. Enter quantities for each item you own.</p>
+                <a asp-controller="Ingredients" asp-action="Index" class="btn btn-outline-success">
+                    <i class="fas fa-plus me-2"></i>Add Ingredients
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 border-0 shadow-sm text-center step-card">
+            <div class="card-body p-4">
+                <div class="step-number bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                    <span class="fw-bold fs-4">3</span>
+                </div>
+                <i class="fas fa-magic fa-3x text-warning mb-3 d-block"></i>
+                <h5 class="card-title">Get Optimal Results</h5>
+                <p class="card-text">Our smart algorithm calculates the perfect recipe combination that feeds the maximum number of people with your ingredients.</p>
+                <a asp-controller="Optimizer" asp-action="Index" class="btn btn-outline-warning">
+                    <i class="fas fa-rocket me-2"></i>Optimize Now
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Featured Recipes Section -->
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3>
+                <i class="fas fa-star me-2 text-warning"></i>Featured Recipes
+            </h3>
+            @if (Model.Count > 3)
+            {
+                <a asp-controller="Recipes" asp-action="Index" class="btn btn-outline-primary">
+                    View All @Model.Count Recipes <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            }
+        </div>
+
+        @if (Model.Any())
+        {
+            <div class="row">
+                @foreach (var recipe in Model.OrderByDescending(r => r.Feeds).Take(3))
+                {
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card border-0 shadow-sm h-100 recipe-featured-card">
+                            <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center">
+                                <span class="badge bg-success fs-6">
+                                    <i class="fas fa-users me-1"></i>Feeds @recipe.Feeds
+                                </span>
+                                <small class="text-muted">@recipe.RecipeIngredients.Count ingredients</small>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title text-primary mb-3">
+                                    <i class="fas fa-utensils me-2"></i>@recipe.Name
+                                </h5>
+                                <p class="card-text text-muted mb-3">@recipe.Description</p>
+
+                                <h6 class="text-secondary mb-2">
+                                    <i class="fas fa-list-ul me-2"></i>Key Ingredients:
+                                </h6>
+                                <div class="ingredient-list">
+                                    @foreach (var ingredient in recipe.RecipeIngredients.Take(3))
+                                    {
+                                        <span class="badge bg-light text-dark me-1 mb-1">
+                                            @ingredient.Quantity @ingredient.Ingredient.Unit @ingredient.Ingredient.Name
+                                        </span>
+                                    }
+                                    @if (recipe.RecipeIngredients.Count > 3)
+                                    {
+                                        <span class="badge bg-secondary">+@(recipe.RecipeIngredients.Count - 3) more</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="card-footer bg-transparent border-0">
+                                <div class="d-flex gap-2">
+                                    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@recipe.Id" class="btn btn-outline-primary flex-fill">
+                                        <i class="fas fa-eye me-2"></i>View Recipe
+                                    </a>
+                                    <a href="/Admin/Recipes/Edit/@recipe.Id" class="btn btn-outline-warning btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <i class="fas fa-utensils fa-4x text-muted mb-3"></i>
+                <h4 class="text-muted">No recipes available yet</h4>
+                <p class="text-muted">Check back later for delicious recipes!</p>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Call to Action Section -->
+<div class="row">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm bg-light">
+            <div class="card-body p-5 text-center">
+                <h3 class="mb-4">
+                    <i class="fas fa-rocket me-2 text-primary"></i>Ready to Get Started?
+                </h3>
+                <p class="lead text-muted mb-4">
+                    Start optimizing your meals today! Set your available ingredients and discover the perfect recipe combinations.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a asp-controller="Ingredients" asp-action="Index" class="btn btn-primary btn-lg">
+                        <i class="fas fa-carrot me-2"></i>Set My Ingredients
+                    </a>
+                    <a asp-controller="Recipes" asp-action="Index" class="btn btn-outline-secondary btn-lg">
+                        <i class="fas fa-book me-2"></i>Browse Recipes First
+                    </a>
+                </div>
+
+                <div class="row mt-5 pt-4 border-top">
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <i class="fas fa-leaf text-success me-2"></i>
+                            <span class="fw-bold text-success">Reduce Food Waste</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <i class="fas fa-users text-primary me-2"></i>
+                            <span class="fw-bold text-primary">Feed More People</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <i class="fas fa-brain text-warning me-2"></i>
+                            <span class="fw-bold text-warning">Smart Planning</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Add hover animations to cards
+            $('.step-card, .recipe-featured-card').hover(
+                function() {
+                    $(this).addClass('shadow-lg').css('transform', 'translateY(-5px)');
+                },
+                function() {
+                    $(this).removeClass('shadow-lg').css('transform', 'translateY(0)');
+                }
+            );
+
+            // Add smooth scroll animation when cards come into view
+            $(window).scroll(function() {
+                $('.step-card').each(function() {
+                    var elementTop = $(this).offset().top;
+                    var elementBottom = elementTop + $(this).outerHeight();
+                    var viewportTop = $(window).scrollTop();
+                    var viewportBottom = viewportTop + $(window).height();
+
+                    if (elementBottom > viewportTop && elementTop < viewportBottom) {
+                        $(this).addClass('animate__animated animate__fadeInUp');
+                    }
+                });
+            });
+
+            // Initialize tooltips
+            $('[data-bs-toggle="tooltip"]').tooltip();
+
+            // Add click animation to CTA buttons
+            $('.btn-lg').click(function() {
+                $(this).addClass('animate__animated animate__pulse');
+                setTimeout(() => {
+                    $(this).removeClass('animate__animated animate__pulse');
+                }, 1000);
+            });
+        });
+    </script>
+
+    <style>
+        .hero-section {
+            border-radius: 15px !important;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-icon-container {
+            position: relative;
+            height: 200px;
+        }
+
+        .step-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .step-number {
+            font-size: 1.2rem;
+            margin: 0 auto;
+        }
+
+        .recipe-featured-card {
+            transition: all 0.3s ease;
+        }
+
+            .recipe-featured-card:hover {
+                transform: translateY(-5px);
+            }
+
+        .ingredient-list .badge {
+            font-size: 0.75rem;
+        }
+
+        /* Animation classes */
+        .animate__fadeInUp {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .animate__pulse {
+            animation: pulse 0.6s ease-in-out;
+        }
+
+        /* Keyframe animations */
+        @@keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @@keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive styles */
+        @@media (max-width: 768px) {
+            .hero-section .display-4 {
+                font-size: 2.5rem;
+            }
+
+            .hero-section .lead {
+                font-size: 1.1rem;
+            }
+
+            .step-number {
+                width: 50px !important;
+                height: 50px !important;
+                font-size: 1rem !important;
+            }
+        }
+    </style>
+}

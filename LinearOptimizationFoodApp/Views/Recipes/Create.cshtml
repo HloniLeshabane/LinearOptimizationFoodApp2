@@ -1,0 +1,182 @@
+﻿@model LinearOptimizationFoodApp.ViewModels.CreateRecipeViewModel
+@{
+    ViewData["Title"] = "Add New Recipe";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item"><a asp-action="Index">Manage Recipes</a></li>
+        <li class="breadcrumb-item active">Add New Recipe</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card border-0 shadow">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-plus me-2"></i>Add New Recipe
+                </h4>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Create" method="post" id="recipeForm">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                    <!-- Basic Recipe Information -->
+                    <div class="row mb-4">
+                        <div class="col-md-8">
+                            <label asp-for="Name" class="form-label fw-bold">
+                                <i class="fas fa-utensils text-primary me-2"></i>@Html.DisplayNameFor(m => m.Name)
+                            </label>
+                            <input asp-for="Name" class="form-control" placeholder="e.g., Chicken Alfredo Pasta" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="Feeds" class="form-label fw-bold">
+                                <i class="fas fa-users text-success me-2"></i>@Html.DisplayNameFor(m => m.Feeds)
+                            </label>
+                            <input asp-for="Feeds" class="form-control" type="number" min="1" max="100" />
+                            <span asp-validation-for="Feeds" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Description" class="form-label fw-bold">
+                            <i class="fas fa-align-left text-info me-2"></i>@Html.DisplayNameFor(m => m.Description)
+                        </label>
+                        <textarea asp-for="Description" class="form-control" rows="3"
+                                  placeholder="Brief description of the recipe..."></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <!-- Recipe Ingredients Section -->
+                    <div class="card border-secondary mb-4">
+                        <div class="card-header bg-light">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-list text-warning me-2"></i>Recipe Ingredients
+                                </h5>
+                                <button type="button" class="btn btn-sm btn-outline-success" onclick="addIngredientRow()">
+                                    <i class="fas fa-plus me-1"></i>Add Ingredient
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="ingredientsContainer">
+                                <!-- Initial ingredient row will be added by JavaScript -->
+                            </div>
+                            <div class="text-muted">
+                                <i class="fas fa-info-circle me-2"></i>
+                                Add at least one ingredient to create the recipe.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a asp-action="Index" class="btn btn-outline-secondary me-md-2">
+                            <i class="fas fa-arrow-left me-2"></i>Cancel
+                        </a>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save me-2"></i>Create Recipe
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        let ingredientIndex = 0;
+        // Fix the ingredient data serialization
+        const availableIngredients = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.AvailableIngredients.Select(i => new { Id = i.Id, Name = i.Name, Unit = i.Unit })));
+
+        function addIngredientRow() {
+            const container = document.getElementById('ingredientsContainer');
+            const row = document.createElement('div');
+            row.className = 'row mb-3 ingredient-row';
+
+            row.innerHTML = `
+                <div class="col-md-6">
+                    <select name="RecipeIngredients[${ingredientIndex}].IngredientId" class="form-select" required>
+                        <option value="">Select an ingredient...</option>
+                        ${availableIngredients.map(ing =>
+                            `<option value="${ing.Id}">${ing.Name} (${ing.Unit})</option>`
+                        ).join('')}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input name="RecipeIngredients[${ingredientIndex}].Quantity" type="number"
+                           class="form-control" placeholder="Quantity" min="1" step="1" required />
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-outline-danger w-100" onclick="removeIngredientRow(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+
+            container.appendChild(row);
+            ingredientIndex++;
+            updateIngredientIndices();
+        }
+
+        function removeIngredientRow(button) {
+            button.closest('.ingredient-row').remove();
+            updateIngredientIndices();
+        }
+
+        function updateIngredientIndices() {
+            const rows = document.querySelectorAll('#ingredientsContainer .ingredient-row');
+            rows.forEach((row, index) => {
+                const select = row.querySelector('select');
+                const input = row.querySelector('input[type="number"]');
+
+                select.name = `RecipeIngredients[${index}].IngredientId`;
+                input.name = `RecipeIngredients[${index}].Quantity`;
+            });
+        }
+
+        // Add initial ingredient row when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if there are no ingredients, then add one
+            if (document.querySelectorAll('#ingredientsContainer .ingredient-row').length === 0) {
+                addIngredientRow();
+            }
+
+            // Focus on recipe name
+            document.getElementById('Name').focus();
+        });
+
+        // Form validation
+        document.getElementById('recipeForm').addEventListener('submit', function(e) {
+            const ingredientRows = document.querySelectorAll('#ingredientsContainer .ingredient-row');
+            if (ingredientRows.length === 0) {
+                e.preventDefault();
+                alert('Please add at least one ingredient.');
+                return false;
+            }
+
+            let hasValidIngredient = false;
+            ingredientRows.forEach(row => {
+                const select = row.querySelector('select');
+                const input = row.querySelector('input[type="number"]');
+                if (select.value && input.value && parseInt(input.value) > 0) {
+                    hasValidIngredient = true;
+                }
+            });
+
+            if (!hasValidIngredient) {
+                e.preventDefault();
+                alert('Please add at least one valid ingredient with quantity.');
+                return false;
+            }
+        });
+    </script>
+}

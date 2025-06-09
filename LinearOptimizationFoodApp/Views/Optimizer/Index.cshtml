@@ -1,0 +1,160 @@
+﻿@model LinearOptimizationFoodApp.ViewModels.OptimizationResultViewModel
+@{
+    ViewData["Title"] = "Meal Optimizer Results";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="fas fa-magic me-2 text-primary"></i>Optimization Results</h2>
+    <a asp-controller="Ingredients" asp-action="Index" class="btn btn-outline-secondary">
+        <i class="fas fa-edit me-2"></i>Update Ingredients
+    </a>
+</div>
+
+@if (!Model.HasResults)
+{
+    <div class="text-center py-5">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-5">
+                <i class="fas fa-exclamation-triangle fa-4x text-warning mb-4"></i>
+                <h3 class="text-muted mb-3">No Meals Can Be Made</h3>
+                <p class="lead text-muted mb-4">
+                    Unfortunately, we couldn't find any recipe combinations with your current ingredients.
+                </p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a asp-controller="Ingredients" asp-action="Index" class="btn btn-primary">
+                        <i class="fas fa-carrot me-2"></i>Update My Ingredients
+                    </a>
+                    <a asp-controller="Recipes" asp-action="Index" class="btn btn-outline-primary">
+                        <i class="fas fa-book me-2"></i>Browse Recipes
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <!-- Success Results -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="alert alert-success border-0 shadow-sm">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h4 class="alert-heading mb-2">
+                            <i class="fas fa-trophy me-2"></i>Optimization Complete!
+                        </h4>
+                        <p class="mb-0">
+                            Found the perfect combination to feed <strong>@Model.MaxPeopleFed people</strong>
+                            using <strong>@Model.BestCombination.Count recipe(s)</strong>.
+                        </p>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <div class="d-flex flex-column align-items-md-end">
+                            <span class="badge bg-success fs-5 mb-2">@Model.MaxPeopleFed People Fed</span>
+                            <small class="text-muted">@Model.BestCombination.Count Recipe(s)</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recommended Recipes -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h4 class="mb-3">
+                <i class="fas fa-utensils me-2 text-primary"></i>Recommended Recipe Combination
+            </h4>
+            <div class="row">
+                @foreach (var recipe in Model.BestCombination)
+                {
+                    <div class="col-md-6 col-lg-4 mb-3">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">@recipe.Name</h5>
+                                <p class="card-text text-muted">@recipe.Description</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-success">Feeds @recipe.Feeds</span>
+                                    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@recipe.Id" class="btn btn-sm btn-outline-primary">
+                                        View Recipe
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Ingredient Usage -->
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-minus-circle me-2"></i>Ingredients Used
+                    </h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.UsedIngredients.Any())
+                    {
+                        @foreach (var ingredient in Model.UsedIngredients.OrderBy(x => x.Key))
+                        {
+                            <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                                <span><i class="fas fa-leaf me-2 text-danger"></i>@ingredient.Key</span>
+                                <span class="badge bg-danger">@ingredient.Value used</span>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-0">No ingredients used</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-plus-circle me-2"></i>Ingredients Remaining
+                    </h5>
+                </div>
+                <div class="card-body">
+                    @{
+                        var remainingWithQuantity = Model.RemainingIngredients.Where(x => x.Value > 0).OrderBy(x => x.Key);
+                    }
+                    @if (remainingWithQuantity.Any())
+                    {
+                        @foreach (var ingredient in remainingWithQuantity)
+                        {
+                            <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                                <span><i class="fas fa-leaf me-2 text-success"></i>@ingredient.Key</span>
+                                <span class="badge bg-success">@ingredient.Value left</span>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="text-center py-3">
+                            <i class="fas fa-check-circle fa-2x text-success mb-2"></i>
+                            <p class="text-success mb-0">Perfect! All ingredients used efficiently!</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="text-center mt-4">
+        <a asp-controller="Ingredients" asp-action="Index" class="btn btn-primary btn-lg me-3">
+            <i class="fas fa-redo me-2"></i>Try Different Ingredients
+        </a>
+        <a asp-controller="Recipes" asp-action="Index" class="btn btn-outline-primary btn-lg">
+            <i class="fas fa-book me-2"></i>Browse All Recipes
+        </a>
+    </div>
+}

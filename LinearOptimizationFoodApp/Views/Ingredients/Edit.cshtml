@@ -1,0 +1,113 @@
+﻿@model LinearOptimizationFoodApp.ViewModels.EditIngredientViewModel
+@{
+    ViewData["Title"] = "Edit Ingredient";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item"><a asp-action="Index">Manage Ingredients</a></li>
+        <li class="breadcrumb-item active">Edit @Model.Name</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-lg-6 mx-auto">
+        <div class="card border-0 shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-edit me-2"></i>Edit Ingredient
+                </h4>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Edit" method="post">
+                    <input asp-for="Id" type="hidden" />
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label fw-bold">
+                            <i class="fas fa-leaf text-success me-2"></i>@Html.DisplayNameFor(m => m.Name)
+                        </label>
+                        <input asp-for="Name" class="form-control" placeholder="e.g., Tomatoes, Chicken Breast, Olive Oil" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                        <div class="form-text">Enter a descriptive name for the ingredient</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Unit" class="form-label fw-bold">
+                            <i class="fas fa-balance-scale text-info me-2"></i>@Html.DisplayNameFor(m => m.Unit)
+                        </label>
+                        <select asp-for="Unit" class="form-select">
+                            <option value="">Select a unit...</option>
+                            <optgroup label="Volume">
+                                <option value="cups">Cups</option>
+                                <option value="tbsp">Tablespoons</option>
+                                <option value="tsp">Teaspoons</option>
+                                <option value="ml">Milliliters</option>
+                                <option value="liters">Liters</option>
+                                <option value="fl oz">Fluid Ounces</option>
+                            </optgroup>
+                            <optgroup label="Weight">
+                                <option value="lbs">Pounds</option>
+                                <option value="oz">Ounces</option>
+                                <option value="kg">Kilograms</option>
+                                <option value="g">Grams</option>
+                            </optgroup>
+                            <optgroup label="Count">
+                                <option value="pieces">Pieces</option>
+                                <option value="items">Items</option>
+                                <option value="cloves">Cloves</option>
+                                <option value="slices">Slices</option>
+                            </optgroup>
+                        </select>
+                        <span asp-validation-for="Unit" class="text-danger"></span>
+                        <div class="form-text">Choose the unit of measurement for this ingredient</div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a asp-action="Index" class="btn btn-outline-secondary me-md-2">
+                            <i class="fas fa-arrow-left me-2"></i>Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i>Update Ingredient
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Warning Card for Recipe Usage -->
+        <div class="card border-warning mt-4">
+            <div class="card-body">
+                <h6 class="card-title text-warning">
+                    <i class="fas fa-exclamation-triangle me-2"></i>Important Note
+                </h6>
+                <p class="card-text mb-0">
+                    Changing the name or unit of this ingredient will affect all recipes that use it.
+                    Make sure the changes are appropriate for existing recipes.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function() {
+            // Focus on the name input
+            $('#Name').focus().select();
+
+            // Auto-capitalize first letter
+            $('#Name').on('input', function() {
+                var value = $(this).val();
+                if (value.length > 0) {
+                    $(this).val(value.charAt(0).toUpperCase() + value.slice(1));
+                }
+            });
+        });
+    </script>
+}

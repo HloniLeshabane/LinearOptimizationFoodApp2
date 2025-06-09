@@ -1,0 +1,610 @@
+/* Custom CSS for Linear Optimization Food App */
+
+/* Global Styles */
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+body {
+    margin-bottom: 60px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Layout Components */
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.hero-section {
+    border-radius: 15px !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer {
+    margin-top: auto;
+    padding: 1rem 0;
+}
+
+/* Cards and Components */
+.card {
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+    .card:hover {
+        transform: translateY(-2px);
+    }
+
+.recipe-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .recipe-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    }
+
+.step-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+    .step-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    }
+
+.recipe-featured-card {
+    transition: all 0.3s ease;
+}
+
+    .recipe-featured-card:hover {
+        transform: translateY(-5px);
+    }
+
+/* Buttons */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+    .btn:hover {
+        transform: translateY(-1px);
+    }
+
+.btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+}
+
+/* Badges */
+.badge {
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+/* Forms and Inputs */
+.ingredient-input {
+    transition: all 0.3s ease;
+    border: 2px solid #e9ecef;
+}
+
+    .ingredient-input:hover {
+        border-color: #007bff;
+    }
+
+    .ingredient-input.border-success {
+        border-color: #198754 !important;
+        background-color: #f8fff9 !important;
+    }
+
+.form-control {
+    border-radius: 6px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+/* Alerts */
+.alert {
+    border-radius: 10px;
+    border: none;
+    font-weight: 500;
+}
+
+.alert-success {
+    background-color: #d1e7dd;
+    color: #0a3622;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #58151c;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #664d03;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    color: #055160;
+}
+
+/* Statistics Cards */
+.stats-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 15px;
+}
+
+/* Ingredient List */
+.ingredient-list .badge {
+    font-size: 0.75rem;
+    margin: 2px;
+}
+
+/* Step Numbers */
+.step-number {
+    font-size: 1.2rem;
+    margin: 0 auto;
+    width: 60px;
+    height: 60px;
+}
+
+/* Navigation */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.nav-link {
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+    .nav-link:hover {
+        color: rgba(255, 255, 255, 0.8) !important;
+    }
+
+/* Breadcrumbs */
+.breadcrumb {
+    background-color: transparent;
+    padding: 0;
+    margin-bottom: 1rem;
+}
+
+.breadcrumb-item a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+    .breadcrumb-item a:hover {
+        text-decoration: underline;
+    }
+
+/* Modals */
+.modal-content {
+    border-radius: 10px;
+    border: none;
+}
+
+.modal-header {
+    border-bottom: 1px solid #e9ecef;
+    border-radius: 10px 10px 0 0;
+}
+
+/* Tables and Lists */
+.list-unstyled li {
+    padding: 0.25rem 0;
+}
+
+/* Utility Classes */
+.shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+
+.shadow {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.shadow-lg {
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}
+
+/* Text Colors */
+.text-primary {
+    color: #007bff !important;
+}
+
+.text-success {
+    color: #198754 !important;
+}
+
+.text-warning {
+    color: #ffc107 !important;
+}
+
+.text-danger {
+    color: #dc3545 !important;
+}
+
+.text-info {
+    color: #0dcaf0 !important;
+}
+
+/* Background Colors */
+.bg-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.animate__fadeInUp {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.animate__pulse {
+    animation: pulse 0.6s ease-in-out;
+}
+
+/* Loading States */
+.btn-loading {
+    position: relative;
+}
+
+    .btn-loading:disabled {
+        opacity: 0.8;
+    }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-section .display-4 {
+        font-size: 2.5rem;
+    }
+
+    .hero-section .lead {
+        font-size: 1.1rem;
+    }
+
+    .step-number {
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 1rem !important;
+    }
+
+    .btn-lg {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    .hero-section {
+        padding: 2rem 1rem !important;
+        margin-bottom: 2rem !important;
+    }
+
+        .hero-section .display-4 {
+            font-size: 2rem;
+        }
+
+    .card-header {
+        padding: 0.75rem;
+    }
+
+    .card-body {
+        padding: 0.75rem;
+    }
+
+    .btn-group-vertical .btn {
+        margin-bottom: 0.5rem;
+    }
+
+    .ingredient-input {
+        padding: 0.75rem;
+    }
+
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .navbar,
+    .footer,
+    .btn,
+    .alert {
+        display: none !important;
+    }
+
+    .card {
+        border: 1px solid #dee2e6 !important;
+        box-shadow: none !important;
+    }
+
+    .text-primary,
+    .text-success,
+    .text-warning,
+    .text-danger,
+    .text-info {
+        color: #000 !important;
+    }
+}
+
+/* Dark Mode Support (if needed in future) */
+@media (prefers-color-scheme: dark) {
+    /* Uncomment and customize if dark mode is implemented
+    body {
+        background-color: #1a1a1a;
+        color: #ffffff;
+    }
+    
+    .card {
+        background-color: #2d2d2d;
+        border-color: #404040;
+    }
+    */
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #a8a8a8;
+    }
+
+/* Focus Styles for Accessibility */
+.btn:focus,
+.form-control:focus,
+.nav-link:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+}
+
+/* Skip to Content Link (for accessibility) */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: #007bff;
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    border-radius: 4px;
+    z-index: 1000;
+}
+
+    .skip-link:focus {
+        top: 6px;
+    }
+
+/* Error Page Styles */
+.error-page {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Loading Spinner */
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Custom Utility Classes */
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.border-dashed {
+    border-style: dashed !important;
+}
+
+.text-decoration-none {
+    text-decoration: none !important;
+}
+
+.text-decoration-underline {
+    text-decoration: underline !important;
+}
+
+/* Component-specific Styles */
+.recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.ingredient-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+/* Footer Styles */
+.footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+    margin-top: auto;
+}
+
+    .footer a {
+        color: #6c757d;
+        text-decoration: none;
+    }
+
+        .footer a:hover {
+            color: #007bff;
+            text-decoration: underline;
+        }
+
+/* Back to Top Button */
+#scrollToTop {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+    #scrollToTop:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+    }
+
+/* Success/Error Message Styling */
+.message-container {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 1050;
+    max-width: 400px;
+}
+
+/* Custom Badge Styles */
+.badge-outline {
+    background-color: transparent;
+    border: 1px solid currentColor;
+}
+
+/* Table Styles */
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.table th {
+    border-top: none;
+    font-weight: 600;
+    color: #495057;
+}
+
+/* Input Group Enhancements */
+.input-group-text {
+    background-color: #f8f9fa;
+    border-color: #ced4da;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+/* Progress Bar Custom Styles */
+.progress {
+    height: 8px;
+    border-radius: 4px;
+    background-color: #e9ecef;
+}
+
+.progress-bar {
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+/* Custom List Styles */
+.list-group-item {
+    border-radius: 6px !important;
+    margin-bottom: 0.25rem;
+    border: 1px solid #e9ecef;
+}
+
+    .list-group-item:hover {
+        background-color: #f8f9fa;
+    }
+
+/* Dropdown Menu Enhancements */
+.dropdown-menu {
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-item {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    margin: 0.125rem 0.5rem;
+}
+
+    .dropdown-item:hover {
+        background-color: #f8f9fa;
+        color: #007bff;
+    }
+
+/* Final responsive adjustments */
+@media (max-width: 991px) {
+    .navbar-nav {
+        padding-top: 1rem;
+    }
+
+        .navbar-nav .nav-item {
+            text-align: center;
+        }
+}

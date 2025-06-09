@@ -1,0 +1,49 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Error @Model.StatusCode
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger" role="alert">
+                        <h5 class="alert-heading">Sorry, something went wrong!</h5>
+                        <p class="mb-0">@Model.Message</p>
+                    </div>
+
+                    @if (Model.ShowRequestId)
+                    {
+                        <p class="text-muted">
+                            <small>Request ID: <code>@Model.RequestId</code></small>
+                        </p>
+                    }
+
+                    @if (Model.ShowDetails)
+                    {
+                        <div class="mt-3">
+                            <h6>Technical Details (Development Only):</h6>
+                            <pre class="bg-light p-3 text-danger small">@Model.Details</pre>
+                        </div>
+                    }
+
+                    <div class="mt-4">
+                        <a href="@Url.Action("Index", "Home")" class="btn btn-primary">
+                            <i class="fas fa-home"></i> Return Home
+                        </a>
+                        <button onclick="history.back()" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Go Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

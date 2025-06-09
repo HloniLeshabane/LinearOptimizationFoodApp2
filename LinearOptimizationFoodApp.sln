@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35825.156
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinearOptimizationFoodApp", "LinearOptimizationFoodApp\LinearOptimizationFoodApp.csproj", "{722CC61C-1C8D-43C8-AFFA-BA43497EC1A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinearOptimizationFoodAppTests", "FoodOptimizationTest\LinearOptimizationFoodAppTests.csproj", "{B64A3D2C-7A71-410F-94A7-7D84F6352BAB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{722CC61C-1C8D-43C8-AFFA-BA43497EC1A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{722CC61C-1C8D-43C8-AFFA-BA43497EC1A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{722CC61C-1C8D-43C8-AFFA-BA43497EC1A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{722CC61C-1C8D-43C8-AFFA-BA43497EC1A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B64A3D2C-7A71-410F-94A7-7D84F6352BAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B64A3D2C-7A71-410F-94A7-7D84F6352BAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B64A3D2C-7A71-410F-94A7-7D84F6352BAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B64A3D2C-7A71-410F-94A7-7D84F6352BAB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2BB950AE-770F-42FB-A9A1-5FEA596A12FB}
+	EndGlobalSection
+EndGlobal

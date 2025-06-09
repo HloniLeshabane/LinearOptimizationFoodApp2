@@ -1,0 +1,114 @@
+﻿@model LinearOptimizationFoodApp.ViewModels.CreateIngredientViewModel
+@{
+    ViewData["Title"] = "Add New Ingredient";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item"><a asp-action="Index">Manage Ingredients</a></li>
+        <li class="breadcrumb-item active">Add New Ingredient</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-lg-6 mx-auto">
+        <div class="card border-0 shadow">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-plus me-2"></i>Add New Ingredient
+                </h4>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label fw-bold">
+                            <i class="fas fa-leaf text-success me-2"></i>@Html.DisplayNameFor(m => m.Name)
+                        </label>
+                        <input asp-for="Name" class="form-control" placeholder="e.g., Tomatoes, Chicken Breast, Olive Oil" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                        <div class="form-text">Enter a descriptive name for the ingredient</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Unit" class="form-label fw-bold">
+                            <i class="fas fa-balance-scale text-info me-2"></i>@Html.DisplayNameFor(m => m.Unit)
+                        </label>
+                        <select asp-for="Unit" class="form-select">
+                            <option value="">Select a unit...</option>
+                            <optgroup label="Volume">
+                                <option value="cups">Cups</option>
+                                <option value="tbsp">Tablespoons</option>
+                                <option value="tsp">Teaspoons</option>
+                                <option value="ml">Milliliters</option>
+                                <option value="liters">Liters</option>
+                                <option value="fl oz">Fluid Ounces</option>
+                            </optgroup>
+                            <optgroup label="Weight">
+                                <option value="lbs">Pounds</option>
+                                <option value="oz">Ounces</option>
+                                <option value="kg">Kilograms</option>
+                                <option value="g">Grams</option>
+                            </optgroup>
+                            <optgroup label="Count">
+                                <option value="pieces">Pieces</option>
+                                <option value="items">Items</option>
+                                <option value="cloves">Cloves</option>
+                                <option value="slices">Slices</option>
+                            </optgroup>
+                        </select>
+                        <span asp-validation-for="Unit" class="text-danger"></span>
+                        <div class="form-text">Choose the unit of measurement for this ingredient</div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a asp-action="Index" class="btn btn-outline-secondary me-md-2">
+                            <i class="fas fa-arrow-left me-2"></i>Cancel
+                        </a>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save me-2"></i>Create Ingredient
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Help Card -->
+        <div class="card border-0 shadow-sm mt-4">
+            <div class="card-body">
+                <h6 class="card-title">
+                    <i class="fas fa-lightbulb text-warning me-2"></i>Tips for Adding Ingredients
+                </h6>
+                <ul class="list-unstyled mb-0">
+                    <li><i class="fas fa-check text-success me-2"></i>Use specific names (e.g., "Chicken Breast" instead of "Chicken")</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Choose appropriate units for easy measurement</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Be consistent with naming conventions</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Consider how the ingredient will be used in recipes</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function() {
+            // Focus on the name input
+            $('#Name').focus();
+
+            // Auto-capitalize first letter
+            $('#Name').on('input', function() {
+                var value = $(this).val();
+                if (value.length > 0) {
+                    $(this).val(value.charAt(0).toUpperCase() + value.slice(1));
+                }
+            });
+        });
+    </script>
+}
